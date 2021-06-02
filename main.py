@@ -2,16 +2,15 @@ import discord
 from discord.ext import commands
 from discord.utils import get
 import os
+import random
 import asyncio
 from keep_alive import keep_alive
 
 bot = commands.Bot(command_prefix='$')
 
-
-
-
 @bot.event
 async def on_ready():
+    await bot.change_presence(activity = discord.Game('Y quien monda es Dorian?'))
     print('Loggining on {0.user}'.format(bot))
 
 @bot.event
@@ -19,45 +18,42 @@ async def on_member_join(member):
     public = 'welcome, {0.mention}:'.format(member)
     await member.guild.system_channel.send(public)
 
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Escriba bien el comando maldito impedido')
+    if isinstance(error, commands.CommandNotFound):
+        # await ctx.send('¿De que me hablas viejo?')
+        await ctx.send(file = discord.File('./images/de_que_me_hablas.jpg'))
 
 @bot.command()
-async def ping(ctx):
-    await ctx.send(f'pong :sunglasses: {(bot.latency) * 1000} ms')
-
-
-@bot.command(pass_context=True)
-async def chnick(ctx, member: discord.Member, nick):
-    await member.edit(nick=nick)
-    await ctx.send(f'Ahora seras conocido como: {member.mention} mamahuevo')
-
-@bot.command(pass_context=True)
-async def apodo(ctx, member: discord.Member, nick):
-    reactions = ["🟢", "🔴"]
-    ans = """
-        Solicitud de {0}
-        **CAMBIO DE APODO PARA** {1} -> {2}
-        APRUEBA         :white_check_mark:   
-        
-        NO APRUEBA  :no_entry:
-        """.format(ctx.message.author.name, member, nick)
-    m = await ctx.send(ans)
-    for name in reactions:
-        emoji = get(ctx.guild.emojis, name=name)
-        await m.add_reaction(emoji or name)
-    await asyncio.sleep(10)
-    most_voted = max(m.reactions, key=lambda r: r.count)
-    await m.channel.send(f"The results are in and option {most_voted.emoji} was the most popular with {most_voted.count-1:,} votes!")
-    
-@bot.command(pass_context=True)
-async def test(ctx):
-    m = await ctx.send("test")
-    await asyncio.sleep(10)
-    print (m.reactions)
+@commands.has_role(849454598296830023)
+async def force_load(ctx):
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
+            bot.load_extension(f'cogs.{filename[:-3]}')
+    await ctx.send('✅Las extenciones han sido recargadas✅')
 
 @bot.command()
-async def cricko(ctx):
-    await ctx.send('Es igual pero mas crico')
+@commands.has_role(849454598296830023)
+async def load(ctx, extension):
+    bot.load_extension(f'cogs.{extension}')
 
+@bot.command()
+@commands.has_role(849454598296830023)
+async def unload(ctx, extension):
+    bot.unload_extension(f'cogs.{extension}')
+
+@bot.command()
+@commands.has_role(849454598296830023)
+async def reload(ctx, extension):
+    bot.unload_extension(f'cogs.{extension}')
+    bot.load_extension(f'cogs.{extension}')
+    await ctx.send(f'✅ Modulo {extension} Recargado')
+
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        bot.load_extension(f'cogs.{filename[:-3]}')
 
 keep_alive()
 bot.run(os.environ['TOKEN'])
