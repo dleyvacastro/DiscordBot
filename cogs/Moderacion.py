@@ -19,13 +19,13 @@ class Moderacion(commands.Cog):
     
     @commands.command()
     @commands.has_any_role(685973595423375388, 849454598296830023)
-    async def kick(self, ctx, member : discord.Member, *, reason = None):
+    async def kick(self, ctx, member : commands.MemberConverter, *, reason = None):
         await member.kick(reason = reason)
         await ctx.send(f'Se comenta que a alias {member.mention} lo enterraron por sapo.')
 
     @commands.command()
     @commands.has_any_role(685973595423375388, 849454598296830023)
-    async def ban(self, ctx, member : discord.Member, *, reason = None):
+    async def ban(self, ctx, member : commands.MemberConverter, *, reason = None):
         await member.ban(reason = reason)
         await ctx.send(f'No debiste incordiar al Señor Tenebroso {member.mention}.')
 
@@ -44,7 +44,7 @@ class Moderacion(commands.Cog):
     
     @commands.command(pass_context=True)
     @commands.has_any_role(685973595423375388, 849454598296830023)
-    async def chnick(self, ctx, member: discord.Member, *, nick):
+    async def chnick(self, ctx, member: commands.MemberConverter, *, nick):
         await member.edit(nick=nick)
         await ctx.send(f'Ahora seras conocido como: {member.mention} mamahuevo')
     

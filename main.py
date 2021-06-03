@@ -5,6 +5,7 @@ import os
 import random
 import asyncio
 from keep_alive import keep_alive
+from Anexos import *
 
 bot = commands.Bot(command_prefix='$')
 
@@ -17,6 +18,25 @@ async def on_ready():
 async def on_member_join(member):
     public = 'welcome, {0.mention}:'.format(member)
     await member.guild.system_channel.send(public)
+    
+@bot.listen('on_message')
+async def whatever_you_want_to_call_it(message):
+    # do stuff here
+    # do not process commands here
+    if message.author == bot.user:
+        return
+
+    firmes = bot.get_channel(722869247675596911)
+    if message.channel.id == 849770114991783966:
+        # print(message.content)
+        if message.content.startswith('tts'):
+            # print("1")
+            await firmes.send(random.choice(resp(message.author, message.content.replace('tts', ''))), tts = True)
+        else:
+            await firmes.send(random.choice(resp(message.author, message.content)))
+        
+        await message.delete()
+        await bot.process_commands(message)
 
 @bot.event
 async def on_command_error(ctx, error):

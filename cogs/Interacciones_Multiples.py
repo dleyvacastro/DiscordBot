@@ -10,17 +10,25 @@ class Interacciones_Multiples(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command(pass_context=True, aliases = ['sa'])
-    async def solicitud_apodo(self, ctx, member: discord.Member, *, nick):
+    @commands.command(pass_context=True, aliases = ['va', 'votacion_apodo'])
+    async def solicitud_apodo(self, ctx, member: commands.MemberConverter, *, nick):
+
+        embed = discord.Embed(
+           title = f'Cambio de apodo.',
+           description = f'El usuario {ctx.author.mention} solicita un cambio de nombre para:\n{member.mention} -> `{nick}`',
+           colour = discord.Colour.random()
+        )
+        embed.set_footer(text = 'Se agradece la brevedad en su voto')
+        embed.set_image(url = 'https://media.discordapp.net/attachments/394983545015238676/849679916751650925/Democracia-COVID-19-coronavirus-AmeCC81rica-Latina-Caribe-voto-votacioCC81n-derechos-civiles-min-102.png?width=647&height=442')
+        embed.set_thumbnail(url = 'https://media.discordapp.net/attachments/394983545015238676/849687628017041458/mickey.png?width=442&height=442')
+        embed.set_author(name = str(ctx.author).split('#')[0], icon_url = ctx.author.avatar_url)
+        embed.add_field(name = 'Empieza la votación.', value = 'Por favor, vote una sola vez.', inline = False)
+        embed.add_field(name = 'APRUEBA', value = ':white_check_mark:', inline = True)
+        embed.add_field(name = 'NO APRUEBA', value = ':no_entry:', inline = True)
+
+
         reactions = ["🟢", "🔴"]
-        ans = """
-            Solicitud de {0}
-            **CAMBIO DE APODO PARA** {1} -> {2}
-            APRUEBA         :white_check_mark:   
-            
-            NO APRUEBA  :no_entry:
-            """.format(ctx.message.author.name, member, nick)
-        m = await ctx.send(ans)
+        m = await ctx.send(embed = embed)
         for name in reactions:
             emoji = get(ctx.guild.emojis, name=name)
             await m.add_reaction(emoji or name)
@@ -28,8 +36,8 @@ class Interacciones_Multiples(commands.Cog):
         solicitud[member] = (m, nick)
         # print(solicitud)
 
-    @commands.command(pass_context=True, aliases = ['ca'])
-    async def cierre_apodo(self, ctx, member: discord.Member):
+    @commands.command(pass_context=True, aliases = ['da', 'desicion_apodo'])
+    async def cierre_apodo(self, ctx, member: commands.MemberConverter):
         m = solicitud[member]
         msg = m[0]
         cache_msg = discord.utils.get(self.bot.cached_messages, id=msg.id) #or client.messages depending on your variable
@@ -50,7 +58,7 @@ class Interacciones_Multiples(commands.Cog):
         else:
             await ctx.send(f'**TIBIOS HPTAS, por eso estamos como estamos**', file = discord.File('./images/fajardo.jpg'))
 
-        await msg.edit(content = f'La acción para {member.mention} ya ha sido tomada')
+        await msg.delete()
     
     @commands.command()
     async def reactionGetter(self, ctx, ):

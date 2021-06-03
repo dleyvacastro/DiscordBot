@@ -56,7 +56,42 @@ class Interacciones_Unicas(commands.Cog):
         imgString = random.choice(image)  # Selects a random element from the list
         path = "./tombotruco/" + imgString
         await ctx.send(file=discord.File(path))
-        
+    
+    @commands.command()
+    async def choose(self, ctx, *, options):
+        options = options.split(',')
+        await ctx.send(random.choice(options))
+
+    @commands.command()
+    async def testEmbed(self, ctx):
+        # author = self.bot.get_user(393592731420721154)
+        embed = discord.Embed(
+           title = 'Menu de Ayuda',
+           description = 'Pre-fix: `$`',
+           colour = discord.Colour.dark_red()
+        )
+        embed.set_footer(text = f'Creado para {ctx.guild.name}')
+        embed.set_thumbnail(url = ctx.guild.icon_url)
+        embed.set_author(name = 'Daniel Leyva', icon_url = ctx.author.avatar_url)
+        embed.add_field(name = '**Interacciones Unicas**', value = 'Comandos de una sola interacción.', inline = False)
+        embed.add_field(name = 'confesion', value = '   Enviara el mensaje de forma anonima', inline = True)
+        embed.add_field(name = 'Alias', value = '`cf`, `confesion`', inline = True)
+        embed.add_field(name = 'ping', value = '    Devuelve la latencia entre el cliente y el bot', inline = False)
+        embed.add_field(name = 'tombotruco', value = '   Enviara la imagen de un tombo.', inline = False)
+        embed.add_field(name = '**Interacciones Multiples**', value = 'Comandos los cuales involucran mas de una acción o miembro.', inline = False)
+
+        embed.add_field(name = 'solicitud_apodo', value = 'Se creara una votación para cambiar el apodo de de un miembro.', inline = True)
+        embed.add_field(name = 'Alias', value = '`va`,`votacion_apodo`', inline = True)
+
+        embed.add_field(name = '🔽Termina en 🔽', value = '🔽🔽🔽🔽🔽🔽', inline = False)
+
+        embed.add_field(name = 'cierre_apodo', value = 'Cerrará la votación para el cambio de nombre para el miembro especificado y dependiendo de esto tomara la accion correspondiente.', inline = True)
+
+        embed.add_field(name = 'Alias', value = '`da`,`desicion_apodo`', inline = True)
+
+        await ctx.send(embed = embed)
+
+
 
 def setup(bot):
     bot.add_cog(Interacciones_Unicas(bot))

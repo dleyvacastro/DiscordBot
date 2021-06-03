@@ -68,6 +68,14 @@ version = "1.0.1"
 
 [[package]]
 category = "main"
+description = "Package for make eazy embeds"
+name = "discord-embeds"
+optional = false
+python-versions = "*"
+version = "0.1"
+
+[[package]]
+category = "main"
 description = "A Python wrapper for the Discord API"
 name = "discord.py"
 optional = false
@@ -179,7 +187,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "67179e68f36674eb3800ba17a69b0effefe435e61bc749fad79640b809325a2e"
+content-hash = "d5a5ce9c8f082f1f4ad41e8effd1ef4991d49db9fca2f45eabeb519694cfc9f9"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -241,6 +249,9 @@ click = [
 discord = [
     {file = "discord-1.0.1-py3-none-any.whl", hash = "sha256:9d4debb4a37845543bd4b92cb195bc53a302797333e768e70344222857ff1559"},
     {file = "discord-1.0.1.tar.gz", hash = "sha256:ff6653655e342e7721dfb3f10421345fd852c2a33f2cca912b1c39b3778a9429"},
+]
+discord-embeds = [
+    {file = "discord_embeds-0.1.tar.gz", hash = "sha256:0d8a25ab79c4aeda89ed7798dea77e7eda628af394f2f4e885c2fe7c9ee83b7f"},
 ]
 "discord.py" = [
     {file = "discord.py-1.7.2-py3-none-any.whl", hash = "sha256:f179db299c949a8cf0a12c1b1b94d0da9a18e088857154d93ae5ab1d807ec61d"},
