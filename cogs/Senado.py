@@ -1,4 +1,5 @@
 import discord
+import asyncio
 from discord.ext import commands
 from discord.utils import get
 
@@ -16,6 +17,7 @@ class Senado(commands.Cog):
         reactions = ["🟢", "🔴"]
         for name in reactions:
             await msg.add_reaction(name)
+        await asyncio.sleep(1)
         cache_msg = discord.utils.get(self.bot.cached_messages, id=msg.id) #or client.messages depending on your variable
         v1 = cache_msg.reactions[0].count
         v2 = cache_msg.reactions[1].count
@@ -23,6 +25,11 @@ class Senado(commands.Cog):
         firmes_role = get(ctx.guild.roles, id = 685974684134801457)
         senador_role = get(ctx.guild.roles, id = 850899217161388073)
 
+        while v1+v2 < 3:
+            reaction, user = await self.bot.wait_for('reaction_add')
+            v1 = cache_msg.reactions[0].count
+            v2 = cache_msg.reactions[1].count
+            print(v1, v2)
 
         if v1 > v2:
             await ctx.send(f'Con un total de {v1} votos, se ha decidido que se abrira el senado galáctico')
@@ -43,6 +50,9 @@ class Senado(commands.Cog):
             await channel.send('En caso de elección. \nAspirantes a candidatos por favor escriban `$candidato`.')
             await channel.send(f'Querido candidato, use el canal {propuestas.mention} para escribir sus propuestas, una vez haya terminado utilice en este canal el comando `$propuestas` para que sean publicadas. Tenga en cuenta que si desea revisarlas antes puede enviar un mensaje privado a {self.bot.user.mention} con el mismo comando')
             await channel.send(f'Comando `$votacion` para realizar las elecciones. Al ganador se le dara el rango corresponiente, mientras que a los demas se les designara el rol {firmes_role.mention}.')
+        else:
+            await ctx.send('Expropie su sufragio. Porque somos democráticos como Cuba.')
+            print(v1, v2)
     @commands.command()
     async def candidato(self, ctx, member : commands.MemberConverter = None):
         if member == None:
