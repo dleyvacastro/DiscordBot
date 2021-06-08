@@ -1,8 +1,9 @@
 import discord
 import random
 import os
+import asyncio
 from discord.ext import commands
-
+from statistics import mode
 class Interacciones_Unicas(commands.Cog):
 
     def __init__(self, bot):
@@ -63,6 +64,35 @@ class Interacciones_Unicas(commands.Cog):
         await ctx.send(random.choice(options))
 
     @commands.command()
+    async def poll(self, ctx, question, *, options):
+        reacted = {}
+        reactions = ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟']
+        options = options.split(',')
+        embed = discord.Embed(
+            title = f'Urna virtual',
+            description = question,
+            colour = discord.Colour.random()
+        )
+        embed.set_thumbnail(url = 'https://www.mdirector.com/wp-content/uploads/2020/09/Encuesta-mensaje.png')
+        embed.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
+        for i in range(len(options)):
+            embed.add_field(name = f'{reactions[i]} {options[i]}',value = "** **",inline = False)
+        
+        m = await ctx.send(embed = embed)
+
+        for i in range(len(options)):
+            await m.add_reaction(reactions[i])
+
+        m2 = await ctx.send(f'La opcion ganadora es: ...')
+
+        while len(reacted) < 5:
+            reaction, user = await self.bot.wait_for('reaction_add')
+            reacted[user] = reaction
+
+            await m2.edit(content= f'La opcion ganadora por el momento es: {mode(reacted.values())}')
+
+        await m2.edit(content= f'La opcion ganadora es: {mode(reacted.values())}')
+    @commands.command()
     async def testEmbed(self, ctx):
         # author = self.bot.get_user(393592731420721154)
         embed = discord.Embed(
@@ -90,6 +120,7 @@ class Interacciones_Unicas(commands.Cog):
         embed.add_field(name = 'Alias', value = '`da`,`desicion_apodo`', inline = True)
 
         await ctx.send(embed = embed)
+
 
 
 

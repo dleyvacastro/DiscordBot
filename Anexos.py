@@ -29,6 +29,6 @@ def resp(author, message):
             f'La fiscalía confirmó que: \n**{message}**',
             f'Un grafiti en la septima dice que: \n**{message}**',
             f'Maria Fernanda Cabal me contó que <@396305256377614337> dijo: \n**{message}**',
-            f'Wikileaks ha filtrado un mensaje:\n**{message}**\n Y por culpa de Petro su autor ha quedado al descubierto, {author}'
+            f'Wikileaks ha filtrado un mensaje:\n**{message}**\n Y por culpa de Petro su autor ha quedado al descubierto, {author.mention}'
         ]
     return respuestas
