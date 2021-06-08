@@ -12,25 +12,37 @@ class Senado(commands.Cog):
 
     @commands.command()
     async def senado(self, ctx):
+        msg = await ctx.send(f'{ctx.author.mention} ha solicitado el senado galácico. ¿Está usted de acuerdo?') 
+        reactions = ["🟢", "🔴"]
+        for name in reactions:
+            await msg.add_reaction(name)
+        cache_msg = discord.utils.get(self.bot.cached_messages, id=msg.id) #or client.messages depending on your variable
+        v1 = cache_msg.reactions[0].count
+        v2 = cache_msg.reactions[1].count
+        
         firmes_role = get(ctx.guild.roles, id = 685974684134801457)
         senador_role = get(ctx.guild.roles, id = 850899217161388073)
 
-        for i in self.Senadores_id:
-            senador = await ctx.guild.fetch_member(i)
-            self.Senadores.append(senador)
 
-        for senador in self.Senadores:
-            await senador.add_roles(senador_role)
+        if v1 > v2:
+            await ctx.send(f'Con un total de {v1} votos, se ha decidido que se abrira el senado galáctico')
         
-        channel = self.bot.get_channel(850901257320923147)
-        propuestas = self.bot.get_channel(850915389638836245)
+            for i in self.Senadores_id:
+                senador = await ctx.guild.fetch_member(i)
+                self.Senadores.append(senador)
 
-        await channel.send(f'Entonces es así, {ctx.author.mention} ha convocado al honorable Senado Galáctico.')
-        await channel.send('¿Qué será ahora?, ¿Golpe de estado?')
-        await channel.send(f'Les deseo mucha suerte {senador_role.mention}, que gane el mejor mentiroso.')
-        await channel.send('En caso de elección. \nAspirantes a candidatos por favor escriban `$candidato`.')
-        await channel.send(f'Querido candidato, use el canal {propuestas.mention} para escribir sus propuestas, una vez haya terminado utilice en este canal el comando `$propuestas` para que sean publicadas. Tenga en cuenta que si desea revisarlas antes puede enviar un mensaje privado a {self.bot.user.mention} con el mismo comando')
-        await channel.send(f'Comando `$votacion` para realizar las elecciones. Al ganador se le dara el rango corresponiente, mientras que a los demas se les designara el rol {firmes_role.mention}.')
+            for senador in self.Senadores:
+                await senador.add_roles(senador_role)
+            
+            channel = self.bot.get_channel(850901257320923147)
+            propuestas = self.bot.get_channel(850915389638836245)
+
+            await channel.send(f'Entonces es así, {ctx.author.mention} ha convocado al honorable Senado Galáctico.')
+            await channel.send('¿Qué será ahora?, ¿Golpe de estado?')
+            await channel.send(f'Les deseo mucha suerte {senador_role.mention}, que gane el mejor mentiroso.')
+            await channel.send('En caso de elección. \nAspirantes a candidatos por favor escriban `$candidato`.')
+            await channel.send(f'Querido candidato, use el canal {propuestas.mention} para escribir sus propuestas, una vez haya terminado utilice en este canal el comando `$propuestas` para que sean publicadas. Tenga en cuenta que si desea revisarlas antes puede enviar un mensaje privado a {self.bot.user.mention} con el mismo comando')
+            await channel.send(f'Comando `$votacion` para realizar las elecciones. Al ganador se le dara el rango corresponiente, mientras que a los demas se les designara el rol {firmes_role.mention}.')
     @commands.command()
     async def candidato(self, ctx, member : commands.MemberConverter = None):
         if member == None:
