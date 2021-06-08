@@ -23,9 +23,9 @@ class Senado(commands.Cog):
         v2 = cache_msg.reactions[1].count
         
         firmes_role = get(ctx.guild.roles, id = 685974684134801457)
-        senador_role = get(ctx.guild.roles, id = 850899217161388073)
+        senador_role = get(ctx.guild.roles, id = 851900166730678372)
 
-        while v1+v2 < 3:
+        while v1+v2 < 5:
             reaction, user = await self.bot.wait_for('reaction_add')
             v1 = cache_msg.reactions[0].count
             v2 = cache_msg.reactions[1].count
@@ -99,7 +99,7 @@ class Senado(commands.Cog):
 
     @commands.command()
     async def votacion(self, ctx):
-        senador_role = get(ctx.guild.roles, id = 850899217161388073)
+        senador_role = get(ctx.guild.roles, id = 851900166730678372)
         admin_role = get(ctx.guild.roles, id = 685973595423375388)
         firmes_role = get(ctx.guild.roles, id = 685974684134801457)
         anuncio = self.bot.get_channel(839554918561611837)
