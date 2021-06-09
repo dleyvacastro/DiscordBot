@@ -12,8 +12,18 @@ class Senado(commands.Cog):
         self.cerrar_votacion = False
 
     @commands.command()
-    async def senado(self, ctx):
-        msg = await ctx.send(f'{ctx.author.mention} ha solicitado el senado galácico. ¿Está usted de acuerdo?') 
+    async def senado(self, ctx, reason = None):
+        embed = discord.Embded(
+            title = 'Senado Galáctico',
+            description = f'Solicitud de apretura de un espacio de conversiación para la toma de desiciones que nos conciernen a todos.\n Razon: {reason
+        }',
+            colour = discord.colour.random()
+        )
+        embed.set_image(url = 'https://i.ytimg.com/vi/ucv4eToxeI0/maxresdefault.jpg')
+        embed.set_thumnail(url = 'https://media.discordapp.net/attachments/394983545015238676/849687628017041458/mickey.png?width=449&height=449')
+        embed.add_field(name = 'Solicitante', value = f'{ctx.author}')
+        
+        msg = await ctx.send(f'{ctx.author.mention} ha solicitado el senado galácico. ¿Está usted de acuerdo?', embed = embed) 
         reactions = ["🟢", "🔴"]
         for name in reactions:
             await msg.add_reaction(name)
