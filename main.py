@@ -38,13 +38,13 @@ async def whatever_you_want_to_call_it(message):
         await message.delete()
         await bot.process_commands(message)
 
-# @bot.event
-# async def on_command_error(ctx, error):
-#     if isinstance(error, commands.MissingRequiredArgument):
-#         await ctx.send('Escriba bien el comando maldito impedido')
-#     if isinstance(error, commands.CommandNotFound):
-#         # await ctx.send('¿De que me hablas viejo?')
-#         await ctx.send(file = discord.File('./images/de_que_me_hablas.jpg'))
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send('Escriba bien el comando maldito impedido')
+    if isinstance(error, commands.CommandNotFound):
+        # await ctx.send('¿De que me hablas viejo?')
+        await ctx.send(file = discord.File('./images/de_que_me_hablas.jpg'))
 
 @bot.command()
 @commands.has_role(849454598296830023)
