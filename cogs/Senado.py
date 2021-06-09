@@ -22,7 +22,6 @@ class Senado(commands.Cog):
         embed.set_image(url = 'https://i.ytimg.com/vi/ucv4eToxeI0/maxresdefault.jpg')
         embed.set_thumnail(url = 'https://media.discordapp.net/attachments/394983545015238676/849687628017041458/mickey.png?width=449&height=449')
         embed.add_field(name = 'Solicitante', value = f'{ctx.author}')
-        embed.add_field(name = 'test', value = 'test')
 
         msg = await ctx.send(f'{ctx.author.mention} ha solicitado el senado galácico. ¿Está usted de acuerdo?', embed = embed) 
         reactions = ["🟢", "🔴"]
