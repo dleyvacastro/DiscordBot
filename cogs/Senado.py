@@ -6,6 +6,7 @@ from discord.utils import get
 class Senado(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.senado = False
         self.Senadores_id = ['394982506417487872','393592731420721154','318611546383319041','396305256377614337','704883078291521537','528019938196324372']
         self.propuestas_dict = {}
         self.Senadores = []
@@ -59,18 +60,22 @@ class Senado(commands.Cog):
             await channel.send('En caso de elección. \nAspirantes a candidatos por favor escriban `$candidato`.')
             await channel.send(f'Querido candidato, use el canal {propuestas.mention} para escribir sus propuestas, una vez haya terminado utilice en este canal el comando `$propuestas` para que sean publicadas. Tenga en cuenta que si desea revisarlas antes puede enviar un mensaje privado a {self.bot.user.mention} con el mismo comando')
             await channel.send(f'Comando `$votacion` para realizar las elecciones. Al ganador se le dara el rango corresponiente, mientras que a los demas se les designara el rol {firmes_role.mention}.')
+            self.senado = True
         else:
             await ctx.send('Expropie su sufragio. Porque somos democráticos como Cuba.')
             print(v1, v2)
     @commands.command()
     async def candidato(self, ctx, member : commands.MemberConverter = None):
-        if member == None:
-            member = ctx.author
-        if member in self.propuestas_dict.keys():
-            await ctx.send('Se va apostular 2 veces o que?')
-            return
-        self.propuestas_dict[member] = []
-        await ctx.send(f'{member.mention} se ha postulado.')
+        if self.senado and propuestas = self.bot.get_channel(850915389638836245):
+            if member == None:
+                member = ctx.author
+            if member in self.propuestas_dict.keys():
+                await ctx.send('Se va apostular 2 veces o que?')
+                return
+            self.propuestas_dict[member] = []
+            await ctx.send(f'{member.mention} se ha postulado.')
+        else:
+            await ctx.send('Se siente bien?')
 
     @commands.Cog.listener('on_message')
     async def propuestas_listener(self, ctx):

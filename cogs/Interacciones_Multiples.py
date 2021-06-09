@@ -37,7 +37,7 @@ class Interacciones_Multiples(commands.Cog):
         # print(solicitud)
 
     @commands.command(pass_context=True, aliases = ['da', 'desicion_apodo'])
-    async def cierre_apodo(self, ctx, member: commands.MemberConverter):
+    async def cierre_apodo(self, ctx, member: commands.MemberConverter = list(solicitud)[len(solicitud)-1]):
         m = solicitud[member]
         msg = m[0]
         cache_msg = discord.utils.get(self.bot.cached_messages, id=msg.id) #or client.messages depending on your variable
