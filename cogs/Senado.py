@@ -66,7 +66,7 @@ class Senado(commands.Cog):
             print(v1, v2)
     @commands.command()
     async def candidato(self, ctx, member : commands.MemberConverter = None):
-        if self.senado and propuestas = self.bot.get_channel(850915389638836245):
+        if self.senado and propuestas == self.bot.get_channel(850915389638836245):
             if member == None:
                 member = ctx.author
             if member in self.propuestas_dict.keys():

@@ -38,7 +38,7 @@ class Interacciones_Multiples(commands.Cog):
 
     @commands.command(pass_context=True, aliases = ['da', 'desicion_apodo'])
     async def cierre_apodo(self, ctx, member: commands.MemberConverter = None):
-        if member = None:
+        if member == None:
             m = solicitud[list(solicitud.values())[len(solicitud)-1]]
         m = solicitud[member]
         msg = m[0]
