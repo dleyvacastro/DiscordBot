@@ -134,9 +134,16 @@ class Interacciones_Unicas(commands.Cog):
         embed.add_field(
             name='Alias', value='`da`,`desicion_apodo`', inline=True)
 
-        await ctx.send(embed=embed)
+        m = await ctx.send(embed=embed)
+
+        await asyncio.sleep(5)
+        embed2 = discord.Embed(
+            title='test',
+            description='test desc',
+            colour=discord.Colour.random()
+        )
+        await m.edit(embed=embed2)
 
 
 def setup(bot):
     bot.add_cog(Interacciones_Unicas(bot))
-
