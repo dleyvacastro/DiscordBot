@@ -46,6 +46,7 @@ class Interacciones_Multiples(commands.Cog):
         v1 = cache_msg.reactions[0].count - 1
         v2 = cache_msg.reactions[1].count - 1
 
+        v = ctx.send(f'{member.mention}')
         while self.cierre_apodo_control[member] and v1+v2 < 5:
             cache_msg = discord.utils.get(self.bot.cached_messages, id=m.id)
 
@@ -62,6 +63,7 @@ class Interacciones_Multiples(commands.Cog):
             r_embed.add_field(name='Aprobado', value='+'*v1, inline=True)
             r_embed.add_field(name='No Aprueba', value='-'*v2)
             r_embed.set_footer(text=f'{v1+v2}/5 miembros han votado.')
+            await v.edit(embed=r_embed)
         # print(solicitud)
 
     @commands.command(pass_context=True, aliases=['da', 'desicion_apodo'])
