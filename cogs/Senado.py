@@ -120,7 +120,7 @@ class Senado(commands.Cog):
 
     @commands.command()
     async def votacion(self, ctx):
-        if not self.senado:
+        if self.senado:
             senador_role = get(ctx.guild.roles, id=851900166730678372)
             admin_role = get(ctx.guild.roles, id=685973595423375388)
             firmes_role = get(ctx.guild.roles, id=685974684134801457)
@@ -183,7 +183,7 @@ class Senado(commands.Cog):
                 await i.remove_roles(senador_role)
                 await i.add_roles(firmes_role)
         else:
-            ctx.reply('No hay senado en este momento. Expropie su sufragio.')
+            await ctx.reply('No hay senado en este momento. Expropie su sufragio.')
 
     @commands.command()
     async def cerrar_votacion(self, ctx):
