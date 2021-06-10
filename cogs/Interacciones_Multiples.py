@@ -10,6 +10,7 @@ class Interacciones_Multiples(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.cierre_apodo_control = {}
 
     @commands.command(pass_context=True, aliases=['va', 'votacion_apodo'])
     async def solicitud_apodo(self, ctx, member: commands.MemberConverter, *, nick):
@@ -38,10 +39,29 @@ class Interacciones_Multiples(commands.Cog):
             await m.add_reaction(emoji or name)
 
         solicitud[member] = (m, nick)
+        self.cierre_apodo_control[member] = True
+
+        while self.cierre_apodo_control[member] and v1+v2 < 5:
+            cache_msg = discord.utils.get(self.bot.cached_messages, id=m.id)
+
+            v1 = cache_msg.reactions[0].count - 1
+            v2 = cache_msg.reactions[1].count - 1
+
+            r_embed = discord.Embed(
+                title=f'Resultado para {member.name}',
+                description=f'Estado actual: ',
+                colour=discord.Color.random()
+            )
+            r_embed.add_field(name=f'{member.mention}',
+                              value=f'@{nick}', inline=True)
+            r_embed.add_field(name='Aprobado', value='+'*v1, inline=True)
+            r_embed.add_field(name='No Aprueba', value='-'*v2)
+            r_embed.set_footer(text=f'{v1+v2}/5 miembros han votado.')
         # print(solicitud)
 
     @commands.command(pass_context=True, aliases=['da', 'desicion_apodo'])
     async def cierre_apodo(self, ctx, member: commands.MemberConverter = None):
+        self.cierre_apodo[member] = False
         if member == None:
             m = solicitud[list(solicitud.keys())[len(solicitud)-1]]
         else:
