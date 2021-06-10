@@ -42,7 +42,8 @@ class Interacciones_Multiples(commands.Cog):
         self.cierre_apodo_control[member] = True
 
         cache_msg = discord.utils.get(self.bot.cached_messages, id=m.id)
-        v2 = cache_msg.reactions[0].count - 1
+        await asyncio.sleep(2)
+        v1 = cache_msg.reactions[0].count - 1
         v2 = cache_msg.reactions[1].count - 1
 
         while self.cierre_apodo_control[member] and v1+v2 < 5:
