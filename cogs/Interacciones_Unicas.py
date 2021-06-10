@@ -4,6 +4,8 @@ import os
 import asyncio
 from discord.ext import commands
 from statistics import mode
+
+
 class Interacciones_Unicas(commands.Cog):
 
     def __init__(self, bot):
@@ -15,7 +17,7 @@ class Interacciones_Unicas(commands.Cog):
 
     @commands.command()
     async def confesion(self, ctx, *, message):
-        await ctx.channel.purge(limit = 1)  
+        await ctx.channel.purge(limit=1)
         respuestas = [
             f'Se dice por ahi que:\n**{message}**',
             f'Algún careverga de por ahí les manda a decir que:\n**{message}**',
@@ -54,10 +56,11 @@ class Interacciones_Unicas(commands.Cog):
     @commands.command()
     async def tombotruco(self, ctx):
         image = os.listdir('./tombotruco/')
-        imgString = random.choice(image)  # Selects a random element from the list
+        # Selects a random element from the list
+        imgString = random.choice(image)
         path = "./tombotruco/" + imgString
         await ctx.send(file=discord.File(path))
-    
+
     @commands.command()
     async def choose(self, ctx, *, options):
         options = options.split(',')
@@ -66,19 +69,22 @@ class Interacciones_Unicas(commands.Cog):
     @commands.command()
     async def poll(self, ctx, question, *, options):
         reacted = {}
-        reactions = ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟']
+        reactions = ['1️⃣', '2️⃣', '3️⃣', '4️⃣',
+                     '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟']
         options = options.split(',')
         embed = discord.Embed(
-            title = f'Urna virtual',
-            description = question,
-            colour = discord.Colour.random()
+            title=f'Urna virtual',
+            description=question,
+            colour=discord.Colour.random()
         )
-        embed.set_thumbnail(url = 'https://www.mdirector.com/wp-content/uploads/2020/09/Encuesta-mensaje.png')
-        embed.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
+        embed.set_thumbnail(
+            url='https://www.mdirector.com/wp-content/uploads/2020/09/Encuesta-mensaje.png')
+        embed.set_author(name=ctx.author, icon_url=ctx.author.avatar_url)
         for i in range(len(options)):
-            embed.add_field(name = f'{reactions[i]} {options[i]}',value = "** **",inline = False)
-        
-        m = await ctx.send(embed = embed)
+            embed.add_field(
+                name=f'{reactions[i]} {options[i]}', value="** **", inline=False)
+
+        m = await ctx.send(embed=embed)
 
         for i in range(len(options)):
             await m.add_reaction(reactions[i])
@@ -89,40 +95,48 @@ class Interacciones_Unicas(commands.Cog):
             reaction, user = await self.bot.wait_for('reaction_add')
             reacted[user] = reaction
 
-            await m2.edit(content= f'La opcion ganadora por el momento es: {mode(reacted.values())}')
+            await m2.edit(content=f'La opcion ganadora por el momento es: {mode(reacted.values())}')
 
-        await m2.edit(content= f'La opcion ganadora es: {mode(reacted.values())}')
+        await m2.edit(content=f'La opcion ganadora es: {mode(reacted.values())}')
+
     @commands.command()
     async def testEmbed(self, ctx):
         # author = self.bot.get_user(393592731420721154)
         embed = discord.Embed(
-           title = 'Menu de Ayuda',
-           description = 'Pre-fix: `$`',
-           colour = discord.Colour.dark_red()
+            title='Menu de Ayuda',
+            description='Pre-fix: `$`',
+            colour=discord.Colour.dark_red()
         )
-        embed.set_footer(text = f'Creado para {ctx.guild.name}')
-        embed.set_thumbnail(url = ctx.guild.icon_url)
-        embed.set_author(name = 'Daniel Leyva', icon_url = ctx.author.avatar_url)
-        embed.add_field(name = '**Interacciones Unicas**', value = 'Comandos de una sola interacción.', inline = False)
-        embed.add_field(name = 'confesion', value = '   Enviara el mensaje de forma anonima', inline = True)
-        embed.add_field(name = 'Alias', value = '`cf`, `confesion`', inline = True)
-        embed.add_field(name = 'ping', value = '    Devuelve la latencia entre el cliente y el bot', inline = False)
-        embed.add_field(name = 'tombotruco', value = '   Enviara la imagen de un tombo.', inline = False)
-        embed.add_field(name = '**Interacciones Multiples**', value = 'Comandos los cuales involucran mas de una acción o miembro.', inline = False)
+        embed.set_footer(text=f'Creado para {ctx.guild.name}')
+        embed.set_thumbnail(url=ctx.guild.icon_url)
+        embed.set_author(name='Daniel Leyva', icon_url=ctx.author.avatar_url)
+        embed.add_field(name='**Interacciones Unicas**',
+                        value='Comandos de una sola interacción.', inline=False)
+        embed.add_field(
+            name='confesion', value='   Enviara el mensaje de forma anonima', inline=True)
+        embed.add_field(name='Alias', value='`cf`, `confesion`', inline=True)
+        embed.add_field(
+            name='ping', value='    Devuelve la latencia entre el cliente y el bot', inline=False)
+        embed.add_field(name='tombotruco',
+                        value='   Enviara la imagen de un tombo.', inline=False)
+        embed.add_field(name='**Interacciones Multiples**',
+                        value='Comandos los cuales involucran mas de una acción o miembro.', inline=False)
 
-        embed.add_field(name = 'solicitud_apodo', value = 'Se creara una votación para cambiar el apodo de de un miembro.', inline = True)
-        embed.add_field(name = 'Alias', value = '`va`,`votacion_apodo`', inline = True)
+        embed.add_field(name='solicitud_apodo',
+                        value='Se creara una votación para cambiar el apodo de de un miembro.', inline=True)
+        embed.add_field(
+            name='Alias', value='`va`,`votacion_apodo`', inline=True)
 
-        embed.add_field(name = '🔽Termina en 🔽', value = '🔽🔽🔽🔽🔽🔽', inline = False)
+        embed.add_field(name='🔽Termina en 🔽', value='🔽🔽🔽🔽🔽🔽', inline=False)
 
-        embed.add_field(name = 'cierre_apodo', value = 'Cerrará la votación para el cambio de nombre para el miembro especificado y dependiendo de esto tomara la accion correspondiente.', inline = True)
+        embed.add_field(name='cierre_apodo', value='Cerrará la votación para el cambio de nombre para el miembro especificado y dependiendo de esto tomara la accion correspondiente.', inline=True)
 
-        embed.add_field(name = 'Alias', value = '`da`,`desicion_apodo`', inline = True)
+        embed.add_field(
+            name='Alias', value='`da`,`desicion_apodo`', inline=True)
 
-        await ctx.send(embed = embed)
-
-
+        await ctx.send(embed=embed)
 
 
 def setup(bot):
     bot.add_cog(Interacciones_Unicas(bot))
+

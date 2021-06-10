@@ -9,16 +9,19 @@ from Anexos import *
 
 bot = commands.Bot(command_prefix='$')
 
+
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity = discord.Game('Y quien monda es Dorian?'))
+    await bot.change_presence(activity=discord.Game('Y quien monda es Dorian?'))
     print('Loggining on {0.user}'.format(bot))
+
 
 @bot.event
 async def on_member_join(member):
     public = 'welcome, {0.mention}:'.format(member)
     await member.guild.system_channel.send(public)
-    
+
+
 @bot.listen('on_message')
 async def whatever_you_want_to_call_it(message):
     # do stuff here
@@ -31,13 +34,12 @@ async def whatever_you_want_to_call_it(message):
         # print(message.content)
         if message.content.startswith('tts'):
             # print("1")
-            await firmes.send(random.choice(resp(message.author, message.content.replace('tts', ''))), tts = True)
+            await firmes.send(random.choice(resp(message.author, message.content.replace('tts', ''))), tts=True)
         else:
             await firmes.send(random.choice(resp(message.author, message.content)))
-        
+
         await message.delete()
         await bot.process_commands(message)
-
 
 
 @bot.command()
@@ -45,18 +47,25 @@ async def whatever_you_want_to_call_it(message):
 async def force_load(ctx):
     for filename in os.listdir('./cogs'):
         if filename.endswith('.py'):
+            bot.unload_extension(f'cogs.{filename[:-3]}')
+
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
             bot.load_extension(f'cogs.{filename[:-3]}')
     await ctx.send('✅Las extenciones han sido recargadas✅')
+
 
 @bot.command()
 @commands.has_role(849454598296830023)
 async def load(ctx, extension):
     bot.load_extension(f'cogs.{extension}')
 
+
 @bot.command()
 @commands.has_role(849454598296830023)
 async def unload(ctx, extension):
     bot.unload_extension(f'cogs.{extension}')
+
 
 @bot.command()
 @commands.has_role(849454598296830023)
