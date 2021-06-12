@@ -69,8 +69,8 @@ class Interacciones_Multiples(commands.Cog):
             await v.edit(embed=r_embed)
         
         if v1 > v2:
-            await ctx.send(f'A peticición popular el nombre de {member} sera {m[1]}.\nEl pueblo ha hablado')
-            await member.edit(nick=m[1])
+            await ctx.send(f'A peticición popular el nombre de {member} sera {nick}.\nEl pueblo ha hablado')
+            await member.edit(nick=nick)
             await ctx.send(f'Ahora seras conocido como: {member.mention} mamahuevo')
             await ctx.send(file=discord.File('./images/democracy.jpg'))
         elif v2 > v1:
