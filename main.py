@@ -4,7 +4,7 @@ from discord.utils import get
 import os
 import random
 import asyncio
-from keep_alive import keep_alive
+# from keep_alive import keep_alive
 from Anexos import *
 
 bot = commands.Bot(command_prefix='$')
@@ -87,5 +87,5 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         bot.load_extension(f'cogs.{filename[:-3]}')
 
-keep_alive()
+#keep_alive()
 bot.run(os.environ['TOKEN'])
