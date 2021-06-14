@@ -13,11 +13,11 @@ class Moderacion(commands.Cog):
 
     @commands.command()
     @commands.has_any_role(685973595423375388, 849454598296830023)
-    async def Clear(self, ctx, amount=2):
+    async def Clear(self, ctx, amount=1):
         """
         Alias: RCN, Caracol, Censura
         """
-        await ctx.channel.purge(limit=amount)
+        await ctx.channel.purge(limit=amount+1)
         if amount > 10:
             await ctx.send(f'Premio Juan Pablo Bieri al Censurador del año, ¿Usted mató a Jaime Garzon o q? {ctx.author.mention}')
             # await ctx.author.edit(nick="Dr. MinTIC")
@@ -109,4 +109,3 @@ class Moderacion(commands.Cog):
 
 def setup(bot):
     bot.add_cog(Moderacion(bot))
-
