@@ -42,6 +42,13 @@ class Economia(commands.Cog):
             return True
         return False
 
+    def chm(self, member, amount):
+        v = db[f'{member.id}']
+        if v < amount:
+            return False
+        db[f'{member.id}'] = f'{int(db[f"{member.id}"])+amount}'
+        return True
+
     @ commands.command()
     @ commands.has_role(849454598296830023)
     async def reset_economy(self, ctx, message):
@@ -119,7 +126,29 @@ class Economia(commands.Cog):
         else:
             db[f'{member.id}'] = int(db[f'{member.id}']) + cont
 
-    # Comandos compras.
+    @commands.command()
+    async def report(self, ctx, rtype, member: commands.MemberConverter):
+        soy_bulloso_role = get(ctx.guild.roles, id=820088027388706867)
+        if f'rm{member.id}' not in db.keys():
+            db[f'rm{member.id}'] = str(0)
+        if rtype == 'mute':
+            afk = ctx.guild.afk_channel
+            await member.move_to(afk)
+            db[f'rm{member.id}'] = f'{int(db[f"rm{member.id}"])+1}'
+            nrep = db[f'rm{member.id}']
+            await ctx.send(f'{member.mention} reportado por bulloso. {nrep}/3')
+
+            if int(nrep) >= 3:
+                time_cont = 0
+                await member.add_roles(soy_bulloso_role)
+                db[f'rm{member.id}'] = str(0)
+                await ctx.send(f'MALPARIDO BULLOSO. \n{soy_bulloso_role.mention} hasta que pague {member.mention}.')
+                while time_cont < 300:
+                    time_cont += 1
+                    await asyncio.sleep(1)
+                await member.remove_roles(soy_bulloso_role)
+
+    # Comandos compras
 
     @ commands.command(pass_context=True)
     async def chnick(self, ctx, member: commands.MemberConverter, *, nick):
