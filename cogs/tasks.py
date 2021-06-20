@@ -10,14 +10,15 @@ db = Database('https://kv.replit.com/v0/eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ
 
 class Tasks(commands.Cog):
 
+
     def __init__(self, bot):
         self.bot = bot
-        self.give_tokens.start()
+        #self.give_tokens.start()
         self.miembros = []
 
         self.miembros_id = ['394982506417487872', '393592731420721154', '318611546383319041',
                             '396305256377614337', '704883078291521537', '528019938196324372']
-
+"""
     def get_user_money(self, user):
         v = int(db[f'{user.id}'])
         return v
@@ -97,7 +98,7 @@ class Tasks(commands.Cog):
             embed.add_field(
                 name=f'**{i.nick}**: {self.get_user_money(i)} Diomede$', value='** **', inline=False)
         await ctx.send(embed=embed)
-
+"""
 
 def setup(bot):
     bot.add_cog(Tasks(bot))

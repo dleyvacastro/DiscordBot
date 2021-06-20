@@ -40,6 +40,8 @@ async def whatever_you_want_to_call_it(message):
 
         await message.delete()
         await bot.process_commands(message)
+    
+    
 
 """
 @bot.event

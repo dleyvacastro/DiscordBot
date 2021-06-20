@@ -224,6 +224,14 @@ version = "1.16.0"
 
 [[package]]
 category = "main"
+description = "DB API 2.0 for Humans"
+name = "sql"
+optional = false
+python-versions = "*"
+version = "0.4.0"
+
+[[package]]
+category = "main"
 description = "Backported and Experimental Type Hints for Python 3.5+"
 name = "typing-extensions"
 optional = false
@@ -262,7 +270,7 @@ python-versions = "*"
 version = "2021.5.16"
 
 [metadata]
-content-hash = "52793f97e56e8a5562ae1ced5b74699ff3f83cbcd98e0c56cbecd01af8317b63"
+content-hash = "71dfcd5743ee74539274bfac3cefab86554117553e8bd84b4ad4b1d209756905"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -509,6 +517,9 @@ replit = [
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
+sql = [
+    {file = "sql-0.4.0.tar.gz", hash = "sha256:7c96955a2f5e99e38e0e5527da2c4be00b0b372ed4d33b5152c8fb71478318ea"},
 ]
 typing-extensions = [
     {file = "typing_extensions-3.10.0.0-py2-none-any.whl", hash = "sha256:0ac0f89795dd19de6b97debb0c6af1c70987fd80a2d62d1958f7e56fcc31b497"},
